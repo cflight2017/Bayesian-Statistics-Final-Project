@@ -1,0 +1,89 @@
+---
+title: "Bayesian Modeling of Hitting"
+author: "Daveed Goldenberg, Cristien Wright"
+date: "December 11, 2019"
+output: beamer_presentation
+---
+
+
+
+
+
+## Logistic Regession Model
+
+$$
+Y_{ij} \stackrel{iid}{\sim} Binomial(M_{ij}, \theta_{ij})
+$$
+$\theta_{ij}$ is the home run rate for player i in year j
+
+$$
+log(\frac{\theta_{ij}}{1- \theta_{ij}}) = \boldsymbol\alpha R_{ij} + \boldsymbol\beta B_{ij} + f(A_{ij}, R_{ij})
+$$
+
+$f(A_{ij}, R_{ij})$ is a smoothing function for age based on position, we used cubic B-splines with coefficients $\gamma$ for each position.
+
+$$
+\boldsymbol\alpha = \left\{
+        \begin{array}{ll}
+            \boldsymbol\alpha_o & \quad E_{ij}= 0 \\
+            \boldsymbol\alpha_1 & \quad E_{ij} = 1
+        \end{array}
+    \right.
+$$
+
+where $\alpha_{ko} < \alpha_{k1}$, $k=1,..9$
+
+$E_{ij}$ is an indicator variable for whether player i is determined to be
+an elite in year j, this is redetermined each year.
+
+## Elite Indicator
+
+![Elite Status](C:\Users\Daveed\Desktop\School\Fall2019\STAT610\Project\Elite.png)
+
+
+
+## Priors
+
+Position Intercepts:
+$$
+\alpha_k \sim MVN(\boldsymbol0, \tau^2\boldsymbol I_2)* I(\alpha_{ko} < \alpha_{k1}), k = 1,...,9
+$$
+
+Home Ball Park / Team Intercepts:
+$$
+\boldsymbol\beta \sim MVN(0, \tau^2\boldsymbol I)
+$$
+
+Spline Coefficients:
+$$
+\gamma_{kp} \sim Normal(0, \tau^2), k=1,..,9 ; p = 1,2,3,4
+$$
+
+## MCMC Implementation
+
+
+## Future Work
+
+- Add age as a factor for $E_{ij}$, as players age they are less likely to
+maintain elite status
+- Model with a multinomial response to include more than just home
+runs. Include things like on base percentage, doubles, singles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
